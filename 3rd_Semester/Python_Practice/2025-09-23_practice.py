@@ -1,46 +1,46 @@
-# def count(s, c) :
-#     res = 0
+ def count(s, c) :
+     res = 0
     
-#     for i in range(len(s)) :
-#         if (s[i] == c):
-#             res = res + 1
-#     return res
+     for i in range(len(s)) :
+         if (s[i] == c):
+             res = res + 1
+     return res
 
-# str= input("Enter a string: ")
-# c = input("Enter the character to count: ")
-# print(count(str, c))
+ str= input("Enter a string: ")
+ c = input("Enter the character to count: ")
+ print(count(str, c))
 
-# def remove_vowels(input_string):
+ def remove_vowels(input_string):
 
-#   vowels = "aeiouAEIOU"
-#   new_string = ""
-#   for char in input_string:
-#     if char not in vowels:
-#       new_string += char
-#   return new_string
+   vowels = "aeiouAEIOU"
+   new_string = ""
+   for char in input_string:
+     if char not in vowels:
+       new_string += char
+   return new_string
 
-# user_input = input("Enter a string: ")
-# result_string = remove_vowels(user_input)
-# print("The string after removing vowels is: ",result_string)
+ user_input = input("Enter a string: ")
+ result_string = remove_vowels(user_input)
+ print("The string after removing vowels is: ",result_string)
 
 
-# str=input("Enter a string: ")
-# str[0]="s"
-# print(str)
+ str=input("Enter a string: ")
+ str[0]="s"
+ print(str)
 
-# str=input("Enter a string: ")
-# str_upper=str[0].upper()
-# rest_str=str[1:]
-# print(str_upper+rest_str)
+ str=input("Enter a string: ")
+ str_upper=str[0].upper()
+ rest_str=str[1:]
+ print(str_upper+rest_str)
 
-# def remove_duplicate(s):
-#     new_str = ""
-#     prev_char = ""
-#     for char in s:
-#         if char != prev_char:
-#             new_str += char
-#         prev_char = char
-#     return new_str
+ def remove_duplicate(s):
+     new_str = ""
+     prev_char = ""
+     for char in s:
+         if char != prev_char:
+             new_str += char
+         prev_char = char
+     return new_str
 
 def count_case(s):
     upper = 0
