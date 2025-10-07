@@ -8,3 +8,9 @@ def longest_word():
 
 def remove_duplicate_words():
     words = input("Enter a list of words separated by spaces: ").split()
+    unique_words = list(dict.fromkeys(words))
+    result = ' '.join(unique_words)
+    print(f"String after removing duplicate words: {result}")
+    
+
+        
