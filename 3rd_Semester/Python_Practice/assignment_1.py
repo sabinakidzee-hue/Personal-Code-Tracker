@@ -18,22 +18,20 @@
 # Total Bill: 94500.0
 
 # L2, L3
-def generate_bill(item, price, quantity=1, discount=0, tax_rate=0.05):
-    subtotal = price * quantity
-    discount_amount = subtotal * (discount / 100)
-    discounted_total = subtotal - discount_amount
-    tax_amount = discounted_total * tax_rate
-    total_amount = discounted_total + tax_amount
+def bill(itm, pr, qty=1, disc=0, tax=0.05):
+    sub = pr * qty
+    dis_amt = sub * (disc / 100)
+    dis_total = sub - dis_amt
+    tax_amt = dis_total * tax
+    total = dis_total + tax_amt
 
-    print("----- Bill Summary -----")
-    print(f"Item: {item}")
-    print(f"Quantity: {quantity}")
-    print(f"Price per item: {price}")
-    print(f"Subtotal: {subtotal}")
-    print(f"Discount: {discount}% (-{discount_amount})")
-    print(f"Tax: {tax_rate * 100}% (+{tax_amount})")
-    print(f"Total Amount Payable: {total_amount}")
-    print("------------------------")
+    print("---- BILL ----")
+    print(f"Item: {itm}")
+    print(f"Qty: {qty}, Price: {pr}")
+    print(f"Disc: {disc}% (-{dis_amt})")
+    print(f"Tax: {tax*100}% (+{tax_amt})")
+    print(f"Total: {total}")
+    print("--------------")
 
 
 # Q2. Design and implement a Python program that simulates a simple calculator using
@@ -52,33 +50,24 @@ def generate_bill(item, price, quantity=1, discount=0, tax_rate=0.05):
 # Enter first number: 10
 # Enter second number: 0
 # Error: Division by zero not allowed.
-operation = input("Enter operation (add/sub/mul/div/mod): ").strip().lower()
-num1 = float(input("Enter first number: "))
-num2 = float(input("Enter second number: "))
-result = None
-if operation == "add":
-    result = num1 + num2
-    print(f"Result: {num1} + {num2} = {result}")
-elif operation == "sub":
-    result = num1 - num2
-    print(f"Result: {num1} - {num2} = {result}")
-elif operation == "mul":
-    result = num1 * num2
-    print(f"Result: {num1} * {num2} = {result}")
-elif operation == "div":
-    if num2 != 0:
-        result = num1 / num2
-        print(f"Result: {num1} / {num2} = {result}")
-    else:
-        print("Error: Division by zero not allowed.")
-elif operation == "mod":
-    if num2 != 0:
-        result = num1 % num2
-        print(f"Result: {num1} % {num2} = {result}")
-    else:
-        print("Error: Modulus by zero not allowed.")
+# Q2
+op = input("Op (add/sub/mul/div/mod): ").lower()
+a = float(input("1st num: "))
+b = float(input("2nd num: "))
+
+if op == "add":
+    print(a + b)
+elif op == "sub":
+    print(a - b)
+elif op == "mul":
+    print(a * b)
+elif op == "div":
+    print("Err: /0" if b == 0 else a / b)
+elif op == "mod":
+    print("Err: %0" if b == 0 else a % b)
 else:
-    print("Error: Invalid operation selected.")
+    print("Invalid op")
+
 
 # Q3. Design and implement a Python program that accepts the name of a month from the
 # user as a string input. The program should determine and display the number of days
@@ -92,34 +81,22 @@ else:
 # Enter a year: 2024
 # Output:
 # February 2024 has 29 days.
-month_days = {
-    "january": 31,
-    "february": 28,  # Default, will adjust for leap years
-    "march": 31,
-    "april": 30,
-    "may": 31,
-    "june": 30,
-    "july": 31,
-    "august": 31,
-    "september": 30,
-    "october": 31,
-    "november": 30,
-    "december": 31
+# Q3
+mon_days = {
+    "jan": 31, "feb": 28, "mar": 31, "apr": 30,
+    "may": 31, "jun": 30, "jul": 31, "aug": 31,
+    "sep": 30, "oct": 31, "nov": 30, "dec": 31
 }
-month = input("Enter the name of a month: ").strip().lower()
-if month in month_days:
-    if month == "february":
-        year = int(input("Enter a year: "))
-        if (year % 4 == 0 and year % 100 != 0) or (year % 400 == 0):
-            days = 29
-        else:
-            days = 28
-        print(f"{month.capitalize()} {year} has {days} days.")
+m = input("Month: ").strip().lower()
+if m in mon_days:
+    if m == "feb":
+        y = int(input("Year: "))
+        d = 29 if (y % 4 == 0 and y % 100 != 0) or (y % 400 == 0) else 28
+        print(f"Feb {y} has {d} days")
     else:
-        days = month_days[month]
-        print(f"{month.capitalize()} has {days} days.")
+        print(f"{m.title()} has {mon_days[m]} days")
 else:
-    print("Error: Invalid month name entered.")
+    print("Wrong month!")
 
 # Q4. Design and implement a Python program for two approaches for checking whether
 # a given string is a palindrome using two separate functions.
@@ -135,28 +112,28 @@ else:
 # Input: A string entered by the user (e.g., “Madam”)
 # Output: Display the results from both palindrome-checking functions. For example:
 # For-loop Check: Palindrome, Two-pointer Check: Palindrome
-def is_palindrome_for_loop(s):
+# Q4
+def pali1(s):
     s = s.lower()
-    length = len(s)
-    for i in range(length // 2):
-        if s[i] != s[length - 1 - i]:
+    for i in range(len(s)//2):
+        if s[i] != s[-(i+1)]:
             return False
     return True
-def is_palindrome_two_pointer(s):
-    import string
+
+def pali2(s):
     s = ''.join(c.lower() for c in s if c.isalnum())
-    left, right = 0, len(s) - 1
-    while left < right:
-        if s[left] != s[right]:
+    l, r = 0, len(s)-1
+    while l < r:
+        if s[l] != s[r]:
             return False
-        left += 1
-        right -= 1
+        l += 1
+        r -= 1
     return True
-user_input = input("Enter a string to check for palindrome: ")
-result_for_loop = is_palindrome_for_loop(user_input)
-result_two_pointer = is_palindrome_two_pointer(user_input)
-print(f"For-loop Check: {'Palindrome' if result_for_loop else 'Not a Palindrome'}")
-print(f"Two-pointer Check: {'Palindrome' if result_two_pointer else 'Not a Palindrome'}")
+
+txt = input("Enter: ")
+print("Loop:", "Yes" if pali1(txt) else "No")
+print("2Ptr:", "Yes" if pali2(txt) else "No")
+
 
 # Q5. Design and implement a Python program that reads a decimal number from the user
 # and performs multiple base conversions. The program should:
@@ -177,13 +154,15 @@ print(f"Two-pointer Check: {'Palindrome' if result_two_pointer else 'Not a Palin
 # their digit counts. Then show the decimal values obtained by reconverting each rep-
 # resentation.
 
-decimal_number = int(input("Enter a decimal number: "))
-binary_rep = bin(decimal_number)[2:]
-octal_rep = oct(decimal_number)[2:]
-hex_rep = hex(decimal_number)[2:].upper()
-print(f"Binary: {binary_rep} (Digits: {len(binary_rep)})")
-print(f"Octal: {octal_rep} (Digits: {len(octal_rep)})")
-print(f"Hexadecimal: {hex_rep} (Digits: {len(hex_rep)})")
+# Q5
+n = int(input("Dec num: "))
+b = bin(n)[2:]
+o = oct(n)[2:]
+h = hex(n)[2:].upper()
+print("Bin:", b, len(b))
+print("Oct:", o, len(o))
+print("Hex:", h, len(h))
+
 
 
 # Q6. Design and implement a Python program that performs both encryption and decryp-
@@ -194,22 +173,26 @@ print(f"Hexadecimal: {hex_rep} (Digits: {len(hex_rep)})")
 # Input: A string entered by the user (e.g., “hello”)
 # Output: Display both the encrypted and decrypted strings.
 # For example: Encrypted: eholl, Decrypted: hello
-def encrypt(text):
-    reversed_text = text[::-1]
-    encrypted_chars = list(reversed_text)
-    for i in range(0, len(encrypted_chars) - 1, 2):
-        encrypted_chars[i], encrypted_chars[i + 1] = encrypted_chars[i + 1], encrypted_chars[i]
-    return ''.join(encrypted_chars)
-def decrypt(encrypted_text):
-    decrypted_chars = list(encrypted_text)
-    for i in range(0, len(decrypted_chars) - 1, 2):
-        decrypted_chars[i], decrypted_chars[i + 1] = decrypted_chars[i + 1], decrypted_chars[i]
-    return ''.join(decrypted_chars)[::-1]
-user_string = input("Enter a string to encrypt: ")
-encrypted_string = encrypt(user_string)
-decrypted_string = decrypt(encrypted_string)
-print(f"Encrypted: {encrypted_string}")
-print(f"Decrypted: {decrypted_string}")
+# Q6
+def enc(t):
+    t = t[::-1]
+    t = list(t)
+    for i in range(0, len(t)-1, 2):
+        t[i], t[i+1] = t[i+1], t[i]
+    return ''.join(t)
+
+def dec(t):
+    t = list(t)
+    for i in range(0, len(t)-1, 2):
+        t[i], t[i+1] = t[i+1], t[i]
+    return ''.join(t)[::-1]
+
+s = input("Text: ")
+e = enc(s)
+d = dec(e)
+print("Enc:", e)
+print("Dec:", d)
+
 
 
 # Q7. Develop a Python program that reads a sentence from the user, splits it into words,
@@ -222,14 +205,15 @@ print(f"Decrypted: {decrypted_string}")
 # Output: Display the sorted words joined by the specified separator.
 # For example: world—python—hello
 
+# Q7
 import string
-sentence = input("Enter a sentence: ")
-separator = input("Enter a custom separator: ")
-words = [''.join(c for c in word if c.isalnum()) for word in sentence.split()]
-words = [word for word in words if word]  # Remove empty strings
-sorted_words = sorted(words, key=str.lower, reverse=True)
-result = separator.join(sorted_words)
-print(f"Sorted and joined words: {result}")
+s = input("Sentence: ")
+sep = input("Separator: ")
+w = [''.join(c for c in x if c.isalnum()) for x in s.split()]
+w = [x for x in w if x]
+w.sort(key=str.lower, reverse=True)
+print(sep.join(w))
+
 
 # Q8. Design and implement a Python function named validate password(password)
 # that checks whether a given password meets specific security requirements. The
@@ -253,32 +237,21 @@ print(f"Sorted and joined words: {result}")
 # Output: Display whether the password is valid or invalid, and if invalid, list the vio-
 # lated rules.
 
-def validate_password(password):
-    errors = []
-    if len(password) < 8:
-        errors.append("Password must be at least 8 characters long.")
-    if not any(c.isupper() for c in password):
-        errors.append("Password must include at least one uppercase letter (A-Z).")
-    if not any(c.islower() for c in password):
-        errors.append("Password must include at least one lowercase letter (a-z).")
-    if not any(c.isdigit() for c in password):
-        errors.append("Password must include at least one digit (0-9).")
-    if not any(c in "!@#$%" for c in password):
-        errors.append("Password must include at least one special character (!@#$%).")
-    if any(c.isspace() for c in password):
-        errors.append("Password must not contain any white spaces.")
-    
-    if errors:
-        return False, errors
-    return True, []
-user_password = input("Enter a password to validate: ")
-is_valid, error_messages = validate_password(user_password)
-if is_valid:
-    print("Password is valid.")
-else:
-    print("Password is invalid. Issues:")
-    for msg in error_messages:
-        print(f"- {msg}")
+# Q8
+def chk_pwd(p):
+    err = []
+    if len(p) < 8: err.append("min 8 chars")
+    if not any(c.isupper() for c in p): err.append("1 uppercase")
+    if not any(c.islower() for c in p): err.append("1 lowercase")
+    if not any(c.isdigit() for c in p): err.append("1 digit")
+    if not any(c in "!@#$%" for c in p): err.append("1 special")
+    if any(c.isspace() for c in p): err.append("no space")
+    return err
+
+pw = input("Pwd: ")
+e = chk_pwd(pw)
+print("Valid" if not e else "Invalid:", ', '.join(e))
+
 
 # Q9. Develop a Python program that processes a paragraph of text entered by the user.
 # The program should perform the following tasks:
@@ -295,15 +268,14 @@ else:
 # For example: Processed Text: This Is An Example Paragraph
 # Vowel Counts  A: 3, E: 2, I: 1, O: 0, U: 0
 
-user_paragraph = input("Enter a paragraph: ")
-title_cased = ' '.join(user_paragraph.split()).title()
-print(f"Processed Text: {title_cased}")
-vowel_counts = {vowel: 0 for vowel in "AEIOU"}
-for char in title_cased.upper():
-    if char in vowel_counts:
-        vowel_counts[char] += 1
-print("Vowel Counts:", ', '.join(f"{vowel}: {count}" for vowel, count in vowel_counts.items()))
-
+# Q9
+p = input("Para: ")
+t = ' '.join(p.split()).title()
+print("Text:", t)
+v = {x: 0 for x in "AEIOU"}
+for c in t.upper():
+    if c in v: v[c] += 1
+print("Vowels:", v)
 
 # Q10. Develop a Python program that counts the frequency of each word in a given sen-
 # tence while ignoring case and punctuation.
@@ -315,13 +287,13 @@ print("Vowel Counts:", ', '.join(f"{vowel}: {count}" for vowel, count in vowel_c
 # Input: A sentence entered by the user (e.g., “Hello world, hello!”).
 # Output: Display the sorted word frequencies in the format “word: count“.
 # For example: hello: 2 world: 1
+# Q10
 import string
-sentence = input("Enter a sentence: ")
-words = [''.join(c for c in word if c.isalnum()).lower() for word in sentence.split()]
-words = [word for word in words if word]  # Remove empty strings
-word_freq = {}
-for word in words:
-    word_freq[word] = word_freq.get(word, 0) + 1
-for word in sorted(word_freq):
-    print(f"{word}: {word_freq[word]}")
-    
+s = input("Sentence: ")
+w = [''.join(c for c in x if c.isalnum()).lower() for x in s.split()]
+w = [x for x in w if x]
+f = {}
+for x in w:
+    f[x] = f.get(x, 0) + 1
+for k in sorted(f):
+    print(f"{k}: {f[k]}")
