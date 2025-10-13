@@ -222,35 +222,35 @@ print(sep.join(w))
 # • It must include at least one uppercase letter (A–Z).
 # • It must include at least one lowercase letter (a–z).
 # • It must include at least one digit (0–9).
-
 # • It must include at least one special character from the set !@#$% and no white-
 # spaces.
-
 # The function should return:
 # • True if the password satisfies all the above conditions.
-
 # • False, along with a list of specific error messages, if one or more rules are vio-
 # lated.
-
 # Input: A string representing the password entered by the user (e.g., “Pass@123”).
-
 # Output: Display whether the password is valid or invalid, and if invalid, list the vio-
 # lated rules.
+# For example: Password is valid.
+def validate_password(pw):
+    errors = []
+    if len(pw) < 8:
+        errors.append("At least 8 chars")
+    if not any(c.isupper() for c in pw):
+        errors.append("At least 1 upper")
+    if not any(c.islower() for c in pw):
+        errors.append("At least 1 lower")
+    if not any(c.isdigit() for c in pw):
+        errors.append("At least 1 digit")
+    if not any(c in "!@#$%" for c in pw):
+        errors.append("At least 1 special !@#$%")
+    if any(c.isspace() for c in pw):
+        errors.append("No spaces allowed")
+    
+    if errors:
+        return False, errors
+    return True, []
 
-# Q8
-def chk_pwd(p):
-    err = []
-    if len(p) < 8: err.append("min 8 chars")
-    if not any(c.isupper() for c in p): err.append("1 uppercase")
-    if not any(c.islower() for c in p): err.append("1 lowercase")
-    if not any(c.isdigit() for c in p): err.append("1 digit")
-    if not any(c in "!@#$%" for c in p): err.append("1 special")
-    if any(c.isspace() for c in p): err.append("no space")
-    return err
-
-pw = input("Pwd: ")
-e = chk_pwd(pw)
-print("Valid" if not e else "Invalid:", ', '.join(e))
 
 
 # Q9. Develop a Python program that processes a paragraph of text entered by the user.
